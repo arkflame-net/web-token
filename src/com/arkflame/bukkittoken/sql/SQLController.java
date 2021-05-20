@@ -23,12 +23,13 @@ class SQLController {
         return false;
     }
 
-    void addColumn(final Connection connection, final String column) {
+    void addColumn(final Connection connection, final String column, final String type) {
         try {
-            final PreparedStatement stmt = connection.prepareStatement("ALTER TABLE users ? ? INT NULL");
+            final PreparedStatement stmt = connection.prepareStatement("ALTER TABLE users ? ? ? NULL");
 
             stmt.setString(1, hasColumn(connection, column) ? "MODIFY" : "ADD");
             stmt.setString(2, column);
+            stmt.setString(3, type);
             stmt.executeUpdate();
         } catch (final SQLException e) {
             e.printStackTrace();
