@@ -8,7 +8,13 @@ import java.sql.SQLException;
 
 // Cointains all the logic for the SQLConnection
 class SQLController {
-    void addTable(final Connection connection, final String table) {
+    private Connection connection;
+
+    void setConnection(final Connection connection) {
+        this.connection = connection;
+    }
+
+    void addTable(final String table) {
         try {
             final PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS ?");
 
@@ -19,7 +25,7 @@ class SQLController {
         }
     }
 
-    boolean hasColumn(final Connection connection, final String column) {
+    boolean hasColumn(final String column) {
         try {
             DatabaseMetaData md = connection.getMetaData();
             ResultSet rs = md.getColumns(null, null, "users", column);
@@ -34,11 +40,11 @@ class SQLController {
         return false;
     }
 
-    void addColumn(final Connection connection, final String column, final String type) {
+    void addColumn(final String column, final String type) {
         try {
             final PreparedStatement stmt = connection.prepareStatement("ALTER TABLE users ? ? ? NULL");
 
-            stmt.setString(1, hasColumn(connection, column) ? "MODIFY" : "ADD");
+            stmt.setString(1, hasColumn(column) ? "MODIFY" : "ADD");
             stmt.setString(2, column);
             stmt.setString(3, type);
             stmt.executeUpdate();
@@ -47,7 +53,7 @@ class SQLController {
         }
     }
 
-    int getToken(final Connection connection, final String nickname) {
+    int getToken(final String nickname) {
         try {
             final PreparedStatement stmt = connection.prepareStatement("SELECT users WHERE nickname = ?");
 
@@ -64,17 +70,17 @@ class SQLController {
         return 0;
     }
 
-    boolean hasToken(final Connection connection, final String nickname) {
-        return getToken(connection, nickname) > 0;
+    boolean hasToken(final String nickname) {
+        return getToken(nickname) > 0;
     }
 
-    int generateToken(final Connection connection, final String nickname) {
+    public int generateToken(final String nickname) {
         try {
             final PreparedStatement stmt = connection
                     .prepareStatement("? users SET bukkit_token = ? WHERE nickname = ?");
             final int token = (int) (999999999 * Math.random());
 
-            stmt.setString(1, hasToken(connection, nickname) ? "UPDATE" : "INSERT");
+            stmt.setString(1, hasToken(nickname) ? "UPDATE" : "INSERT");
             stmt.setInt(2, token);
             stmt.setString(3, nickname);
             stmt.executeUpdate();
