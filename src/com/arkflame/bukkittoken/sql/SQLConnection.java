@@ -12,6 +12,9 @@ public class SQLConnection extends SQLController {
 
     public SQLConnection() {
         new Thread(new SQLConnectionTask(this));
+
+        addColumn(connection, "nickname");
+        addColumn(connection, "bukkit_token");
     }
 
     public void setConnection(final Connection connection) {

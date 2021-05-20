@@ -1,20 +1,19 @@
 package com.arkflame.bukkittoken.sql;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // Cointains all the logic for the SQLConnection
 class SQLController {
-    boolean hasToken(final Connection connection, final String nickname) {
+    boolean hasColumn(final Connection connection, final String column) {
         try {
-            final PreparedStatement stmt = connection.prepareStatement("select users where nickname = ?");
-            
-            stmt.setString(1, nickname);
+            DatabaseMetaData md = connection.getMetaData();
+            ResultSet rs = md.getColumns(null, null, "users", column);
 
-            final int result = stmt.executeUpdate();
-
-            if (result > 0) {
+            if (rs.next()) {
                 return true;
             }
         } catch (final SQLException e) {
@@ -24,20 +23,51 @@ class SQLController {
         return false;
     }
 
+    void addColumn(final Connection connection, final String column) {
+        try {
+            final PreparedStatement stmt = connection.prepareStatement("ALTER TABLE users ? ? INT NULL");
+
+            stmt.setString(1, hasColumn(connection, column) ? "MODIFY" : "ADD");
+            stmt.setString(2, column);
+            stmt.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    int getToken(final Connection connection, final String nickname) {
+        try {
+            final PreparedStatement stmt = connection.prepareStatement("SELECT users WHERE nickname = ?");
+
+            stmt.setString(1, nickname);
+
+            final ResultSet result = stmt.executeQuery();
+            final int token = result.getInt("bukkit_token");
+
+            return token;
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    boolean hasToken(final Connection connection, final String nickname) {
+        return getToken(connection, nickname) > 0;
+    }
+
     int generateToken(final Connection connection, final String nickname) {
         try {
-            final String action = hasToken(connection, nickname) ? "update" : "insert";
-            final PreparedStatement stmt = connection.prepareStatement(action + " users set bukkit_token = ? where nickname = ?");
-            final int token = (int) (99999 * Math.random());
-            
-            stmt.setInt(1, token);
-            stmt.setString(2, nickname);
+            final PreparedStatement stmt = connection
+                    .prepareStatement("? users SET bukkit_token = ? WHERE nickname = ?");
+            final int token = (int) (999999999 * Math.random());
 
-            final int result = stmt.executeUpdate();
+            stmt.setString(1, hasToken(connection, nickname) ? "UPDATE" : "INSERT");
+            stmt.setInt(2, token);
+            stmt.setString(3, nickname);
+            stmt.executeUpdate();
 
-            if (result > 0) {
-                return token;
-            }
+            return token;
         } catch (final SQLException e) {
             e.printStackTrace();
         }
