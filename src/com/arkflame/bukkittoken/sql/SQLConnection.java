@@ -13,6 +13,7 @@ public class SQLConnection extends SQLController {
     public SQLConnection() {
         new Thread(new SQLConnectionTask(this));
 
+        addTable(connection, "users");
         addColumn(connection, "nickname", "VARCHAR");
         addColumn(connection, "bukkit_token", "INT");
     }

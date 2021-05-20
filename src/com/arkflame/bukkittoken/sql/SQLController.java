@@ -8,6 +8,17 @@ import java.sql.SQLException;
 
 // Cointains all the logic for the SQLConnection
 class SQLController {
+    void addTable(final Connection connection, final String table) {
+        try {
+            final PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS ?");
+
+            stmt.setString(1, table);
+            stmt.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     boolean hasColumn(final Connection connection, final String column) {
         try {
             DatabaseMetaData md = connection.getMetaData();
