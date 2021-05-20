@@ -1,6 +1,6 @@
 package com.arkflame.bukkittoken.commands;
 
-import com.arkflame.bukkittoken.sql.SQLConnection;
+import com.arkflame.bukkittoken.mongodb.MongoDBController;
 import com.arkflame.bukkittoken.tokenplayer.TokenPlayer;
 import com.arkflame.bukkittoken.tokenplayer.TokenPlayerManager;
 
@@ -11,10 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class TokenCommandExecutor implements CommandExecutor {
-    private final SQLConnection sqlConnection;
+    private final MongoDBController mongoDBController;
 
-    public TokenCommandExecutor(final SQLConnection sqlConnection) {
-        this.sqlConnection = sqlConnection;
+    public TokenCommandExecutor(final MongoDBController mongoDBController) {
+        this.mongoDBController = mongoDBController;
     }
 
     private String color(final String string) {
@@ -24,11 +24,12 @@ public class TokenCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            final TokenPlayer tokenPlayer = TokenPlayerManager.get((Player) sender);
+            final Player player = (Player) sender;
+            final TokenPlayer tokenPlayer = TokenPlayerManager.get(player);
             final float secondsLeft = tokenPlayer.getLastQueryLeft();
 
             if (secondsLeft <= 0) {
-                final int token = sqlConnection.generateToken(sender.getName());
+                final int token = mongoDBController.generateToken(player.getUniqueId());
 
                 if (token > 0) {
                     final String uri = "https://arkflame.com/register?token=" + token;

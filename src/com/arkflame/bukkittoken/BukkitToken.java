@@ -2,27 +2,27 @@ package com.arkflame.bukkittoken;
 
 import com.arkflame.bukkittoken.commands.TokenCommandExecutor;
 import com.arkflame.bukkittoken.listeners.PlayerJoinListener;
-import com.arkflame.bukkittoken.sql.SQLConnection;
+import com.arkflame.bukkittoken.mongodb.MongoDBController;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitToken extends JavaPlugin {
     private static BukkitToken instance;
-    private SQLConnection sqlConnection = null;
+    private MongoDBController mongoDBController = null;
 
     @Override
     public void onEnable() {
         BukkitToken.instance = this;
-        sqlConnection = new SQLConnection();
+        mongoDBController = new MongoDBController("arkflame");
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getCommand("token").setExecutor(new TokenCommandExecutor(sqlConnection));
+        getCommand("token").setExecutor(new TokenCommandExecutor(mongoDBController));
     }
 
     @Override
     public void onDisable() {
-        if (sqlConnection != null) {
-            sqlConnection.close();
+        if (mongoDBController != null) {
+            mongoDBController.close();
         }
     }
 
