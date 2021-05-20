@@ -1,7 +1,7 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>exploitfixer</groupId>
-  <artifactId>ExploitFixer</artifactId>
+  <groupId>com.arkflame</groupId>
+  <artifactId>BukkitToken</artifactId>
   <version>1.5.8</version>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -13,7 +13,7 @@
     <resources>
       <resource>
         <targetPath>.</targetPath>
-        <directory>${basedir}/resources/</directory>
+        <directory>resources/</directory>
       </resource>
     </resources>
     <plugins>
@@ -35,22 +35,10 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>4.1.62.Final</version>
-    </dependency>
-    <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.16.5-R0.1-SNAPSHOT</version>
+      <version>1.8.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>net</groupId>
-      <artifactId>HamsterAPI</artifactId>
-      <version>SNAPSHOT</version>
-      <scope>system</scope>
-      <systemPath>/home/linsaftw/Jars/HamsterAPI.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
