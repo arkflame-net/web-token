@@ -1,8 +1,8 @@
-package com.arkflame.bukkittoken.commands;
+package com.arkflame.webtoken.commands;
 
-import com.arkflame.bukkittoken.mongodb.MongoDBController;
-import com.arkflame.bukkittoken.tokenplayer.TokenPlayer;
-import com.arkflame.bukkittoken.tokenplayer.TokenPlayerManager;
+import com.arkflame.webtoken.mongodb.MongoDBController;
+import com.arkflame.webtoken.tokenplayer.TokenPlayer;
+import com.arkflame.webtoken.tokenplayer.TokenPlayerManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

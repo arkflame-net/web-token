@@ -1,8 +1,8 @@
-package com.arkflame.bukkittoken.mongodb;
+package com.arkflame.webtoken.mongodb;
 
 import java.util.logging.Logger;
 
-import com.arkflame.bukkittoken.BukkitToken;
+import com.arkflame.webtoken.WebToken;
 import com.mongodb.client.MongoClients;
 
 class MongoDBConnectionTask implements Runnable {
@@ -14,7 +14,7 @@ class MongoDBConnectionTask implements Runnable {
 
     @Override
     public void run() {
-        final Logger logger = BukkitToken.getInstance().getLogger();
+        final Logger logger = WebToken.getInstance().getLogger();
 
         while (!mongoDBConnection.closed) {
             logger.info("Established MongoDB connection to " + MongoDBConnection.URI);

@@ -1,4 +1,4 @@
-package com.arkflame.bukkittoken.mongodb;
+package com.arkflame.webtoken.mongodb;
 
 import com.mongodb.client.MongoClient;
 

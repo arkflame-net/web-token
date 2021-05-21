@@ -1,5 +1,5 @@
-name: BukkitToken
-main: com.arkflame.bukkittoken.BukkitToken
+name: WebToken
+main: com.arkflame.webtoken.WebToken
 version: 0.0.1
 author: ArkFlame
 api: "1.13"

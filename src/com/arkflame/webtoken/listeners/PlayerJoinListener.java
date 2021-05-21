@@ -1,6 +1,6 @@
-package com.arkflame.bukkittoken.listeners;
+package com.arkflame.webtoken.listeners;
 
-import com.arkflame.bukkittoken.tokenplayer.TokenPlayerManager;
+import com.arkflame.webtoken.tokenplayer.TokenPlayerManager;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,4 +1,4 @@
-package com.arkflame.bukkittoken.tokenplayer;
+package com.arkflame.webtoken.tokenplayer;
 
 import java.util.HashMap;
 import java.util.Map;

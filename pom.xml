@@ -1,8 +1,8 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.arkflame</groupId>
-  <artifactId>BukkitToken</artifactId>
-  <version>1.5.8</version>
+  <artifactId>WebToken</artifactId>
+  <version>0.0.1</version>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
